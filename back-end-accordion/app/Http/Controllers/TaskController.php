@@ -21,7 +21,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Task $task, UpdateTaskRequest $request)
+    public function update(User $user, Task $task, UpdateTaskRequest $request)
     {
         $task->update($request->validated());
 
@@ -33,7 +33,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroyU(User $user, Task $task)
     {
         $task->delete();
 

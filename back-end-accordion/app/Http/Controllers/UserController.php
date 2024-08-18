@@ -11,10 +11,14 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(10);
+        $perPage = 10;
+        $users = User::paginate($perPage);
 
         return response()->json([
-            'users' => UserResource::collection($users->data),
+            'page' => $users->currentPage(),
+            'users' => UserResource::collection($users->items()),
+            'totalRecords' => $users->total(),
+            'totalPages' => ceil($users->total()/$perPage)
         ], 200);
     }
 

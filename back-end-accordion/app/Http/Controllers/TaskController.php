@@ -33,7 +33,7 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroyU(User $user, Task $task)
+    public function destroy(User $user, Task $task)
     {
         $task->delete();
 

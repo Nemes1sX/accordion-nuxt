@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 
@@ -22,12 +23,17 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function view(User $user)
+    public function show(User $user)
     {   
-        $user->load('tasks');
+        $perPage = 10;
+        $tasks = $user->tasks()->paginate($perPage);
 
         return response()->json([
-            'users' => UserResource::make($user),
+            'user' => UserResource::make($user),
+            'tasks' => TaskResource::collection($tasks->items()),
+            'page' => $tasks->currentPage(),
+            'totalRecords' => $tasks->total(),
+            'totalPages' => ceil($tasks->total()/$perPage)
         ], 200);
     }
 

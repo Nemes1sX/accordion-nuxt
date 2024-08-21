@@ -26,7 +26,6 @@ class UserController extends Controller
 
     public function show(User $user)
     {   
-        $perPage = 10;
         $tasks = $user->tasks()->pluck('id');
 
         return response()->json([

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\TaskLimitRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,6 +26,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'name' => ['required', Rule::min(8)->max(255)],
             'description' => ['required', Rule::min(8)],
+            'user_id' => ['required', new TaskLimitRule]
         ];
     }
 }

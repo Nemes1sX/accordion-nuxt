@@ -5,12 +5,23 @@
     <div v-if="users.length > 0" v-for="user in users" class="accordion" role="tablist">
           <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
-        <b-button block v-b-toggle="'accordion-' + user.id " variant="info">Accordion {{ user.id }}</b-button>
+        <b-button block aria-expanded="false" class="collapsed" v-b-toggle="'accordion-' + user.id " variant="info">User {{ user.id }}</b-button>
       </b-card-header>
-      <b-collapse :id="'accordion-' + user.id" visible accordion="my-accordion" role="tabpanel">
+      <b-collapse :id="'accordion-' + user.id" false  accordion="my-accordion" role="tabpanel">
         <b-card-body>
           <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
-          <b-card-text>Martinas</b-card-text>
+          <div v-if="tasks.length > 0" v-for="task in tasks" class="accordion" role="tablist">
+          <b-card no-body class="mb-1">
+      <b-card-header header-tag="header" class="p-1" role="tab">
+        <b-button block aria-expanded="false" class="collapsed" v-b-toggle="'accordion-' + user.id + '-' + task.id " variant="info">Task {{ task.id }}</b-button>
+      </b-card-header>
+      <b-collapse :id="'accordion-' + user.id + '-' + task.id" false  accordion="my-accordion" role="tabpanel">
+        <b-card-body>
+          <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>  
+        </b-card-body>
+      </b-collapse>
+    </b-card>
+  </div> 
         </b-card-body>
       </b-collapse>
     </b-card>
@@ -124,9 +135,7 @@ export default Vue.extend({
       currentPage: 1,
       totalPages: 0,
       totalRecords: 0,
-      taskCurrentPage: 1,
-      totalTaskPages: 0,
-      totalTaskRecords: 0,
+      tasks: [],
       userValidationErrors: [],
       modalInstance: null
     };
@@ -161,6 +170,18 @@ export default Vue.extend({
       const modalElement = document.getElementById(modalId);
       this.modalInstance = new Modal(modalElement);
       this.modalInstance.show();
+    },
+    showUser(id) {
+     axios
+     .get(`https://accordion.dev/api/users/${id}`)
+     .then((response) => {
+      this.user = response.data.user;
+      this.tasks = response.data.tasks;
+     })
+     .catch((error) => {
+          this.loading = false;
+          console.log(error);
+        });
     },
     editUser(id, page) {
       this.$refs.myModal.show();

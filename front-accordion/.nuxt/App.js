@@ -12,6 +12,8 @@ import '..\\node_modules\\bootstrap-vue\\dist\\bootstrap-vue.css'
 
 import '..\\node_modules\\@fortawesome\\fontawesome-svg-core\\styles.css'
 
+import '..\\node_modules\\bootstrap\\dist\\css\\bootstrap.min.css'
+
 import _6f6c098b from './layouts/default.vue'
 
 const layouts = { "_default": sanitizeComponent(_6f6c098b) }

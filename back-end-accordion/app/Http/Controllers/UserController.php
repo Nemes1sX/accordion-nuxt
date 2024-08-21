@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\SingleUserResource;
 use App\Models\User;
 
 class UserController extends Controller
@@ -26,14 +27,11 @@ class UserController extends Controller
     public function show(User $user)
     {   
         $perPage = 10;
-        $tasks = $user->tasks()->paginate($perPage);
+        $tasks = $user->tasks()->pluck('id');
 
         return response()->json([
-            'user' => UserResource::make($user),
-            'tasks' => TaskResource::collection($tasks->items()),
-            'page' => $tasks->currentPage(),
-            'totalRecords' => $tasks->total(),
-            'totalPages' => ceil($tasks->total()/$perPage)
+            'user' => SingleUserResource::make($user),
+            'tasks' => TaskResource::collection($tasks),
         ], 200);
     }
 

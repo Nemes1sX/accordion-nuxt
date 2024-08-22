@@ -26,7 +26,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {   
-        $tasks = $user->tasks()->pluck('id');
+        $tasks = $user->tasks()->select('id')->get();
 
         return response()->json([
             'user' => SingleUserResource::make($user),

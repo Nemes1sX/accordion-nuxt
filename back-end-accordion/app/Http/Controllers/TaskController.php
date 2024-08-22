@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Resources\SingleTaskResource;
 use App\Models\Task;
 use App\Models\User;
 
@@ -14,6 +15,13 @@ class TaskController extends Controller
 
         return response()->json([
            'message' => 'User task created successfully'     
+        ], 200);
+    }
+
+    public function show(User $user, Task $task)
+    {
+        return response()->json([
+            'task' => SingleTaskResource::make($task)
         ], 200);
     }
 

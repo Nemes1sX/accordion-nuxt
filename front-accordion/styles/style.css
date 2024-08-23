@@ -1,0 +1,13 @@
+.btn-group-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Adjust spacing between buttons */
+    margin-top: 15px;
+    width: 100%;
+}
+
+.btn-group-flex .btn {
+    flex: 1;
+    min-width: 100px; /* Set a minimum width to prevent shrinking too much */
+    text-align: center;
+}

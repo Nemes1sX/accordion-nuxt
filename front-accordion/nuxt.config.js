@@ -2,7 +2,10 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
-
+  env: {
+    apiUrl: "https://accordion.dev/api",
+    baseUrl: "https://localhost:3000"
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'front-accordion',
@@ -24,7 +27,8 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css',
-    'bootstrap/dist/css/bootstrap.min.css'
+    'bootstrap/dist/css/bootstrap.min.css',
+    '~/styles/style.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -45,6 +49,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    'vue-sweetalert2/nuxt'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

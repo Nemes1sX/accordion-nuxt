@@ -13,7 +13,7 @@ class StoreTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,8 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', Rule::min(8)->max(255)],
-            'description' => ['required', Rule::min(8)],
-            'user_id' => ['required', new TaskLimitRule]
+            'name' => ['required', 'min:8', 'max:255', new TaskLimitRule($this->user)],
+            'description' => ['required', 'min:8'],
         ];
     }
 }

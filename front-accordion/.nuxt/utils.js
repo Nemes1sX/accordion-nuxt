@@ -202,7 +202,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: app.router.options.base,
-      env: {}
+      env: {"apiUrl":"https://accordion.dev/api","baseUrl":"https://localhost:3000"}
     }
     // Only set once
 

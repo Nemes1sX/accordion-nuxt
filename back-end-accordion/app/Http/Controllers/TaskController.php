@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\SingleTaskResource;
 use App\Models\Task;
 use App\Models\User;
@@ -28,7 +29,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(User $user, Task $task, StoreTaskRequest $request)
+    public function update(User $user, Task $task, UpdateTaskRequest $request)
     {
         $task->update($request->validated());
 

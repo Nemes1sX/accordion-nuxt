@@ -59,7 +59,7 @@
           </b-card>
         </div>
         <div v-if="loading">
-          <span class="text-center"><font-awesome-icon icon="fa-solid fa-sync fa-72x" spin/></span>
+          <span class="text-center"><font-awesome-icon icon="fa-solid fa-sync fa-10x" spin/></span>
         </div>
         <div v-else-if="users.length === 0">
           <h3 class="text-center">No users</h3>

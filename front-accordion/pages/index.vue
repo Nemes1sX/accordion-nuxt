@@ -16,7 +16,7 @@
               <b-button block aria-expanded="false" class="collapsed" v-b-toggle="'accordion-' + user.id" variant="info"
                 @click="showUser(user.id)">User {{ user.id }}</b-button>
             </b-card-header>
-            <b-collapse :id="'accordion-' + user.id" false accordion="user-accordion" role="tabpanel">
+            <b-collapse :id="'accordion-' + user.id" :ref="'accordion-' + user.id" false accordion="user-accordion" role="tabpanel">
               <b-card-body>
                 <b-card-text>
                   <ul class="list-group list-group-flush">
@@ -38,7 +38,7 @@
                         v-b-toggle="'accordion-' + user.id + '-' + task.id" variant="info" @click="showTask(user.id, task.id)">
                         Task {{ task.id }}</b-button>
                     </b-card-header>
-                    <b-collapse :id="'accordion-' + user.id + '-' + task.id" false accordion="task-accordion"
+                    <b-collapse :id="'accordion-' + user.id + '-' + task.id" :ref="'accordion-' + user.id + '-' + task.id" false accordion="task-accordion"
                       role="tabpanel">
                       <b-card-body>
                         <ul class="list-group list-group-flush">
@@ -227,12 +227,14 @@ export default Vue.extend({
       let sharedUser = this.$route.query.user;
       let sharedTask = this.$route.query.task;
       const page = Math.ceil(sharedUser / this.pagesPerRecord);
+      this.currentPage = page;
       this.getUsers(page);
       this.openSharedTask(sharedUser, sharedTask);
     }
     else if (this.$route.query.user) {
       let sharedUser = this.$route.query.user;
       const page = Math.ceil(sharedUser / this.pagesPerRecord);
+      this.currentPage = page;
       this.getUsers(page);
       this.openSharedUser(sharedUser);
     } else {
@@ -254,9 +256,18 @@ export default Vue.extend({
           this.loading = false;
           console.log(error);
         });
-    },
+    },  
     paginate(page) {
-      this.currentPage = page;
+      
+      if (this.$route.query.task && this.$route.query.user) {
+        this.$refs[`accordion-${this.$route.query.user}-${this.$route.query.task}`][0].toggle();
+        this.closeUserAccordion(this.$route.query.user);
+        this.$router.replace({'query': null});
+      } else if (this.$route.query.user){        
+        this.closeUserAccordion(this.$route.query.user);
+        this.$router.replace({'query': null});
+      }     
+       this.currentPage = page;
       this.getUsers(this.currentPage);
     },
     createUser() {
@@ -332,13 +343,11 @@ export default Vue.extend({
       tempInput.select();
       document.execCommand('copy');
     },
-    openSharedUser(id) {
+    openSharedUser(userId) {
       setTimeout(() => {
-      const element = document.getElementById(`accordion-${id}`);
-      element.style.removeProperty('display');
-      element.classList.add('show');
+        this.$refs[`accordion-${userId}`][0].toggle();
       }, 1000);
-      this.showUser(id);
+      this.showUser(userId);
     },
     createTask(id) {
       axios
@@ -420,11 +429,15 @@ export default Vue.extend({
     openSharedTask(userId, taskId) {
      this.openSharedUser(userId);
      setTimeout(() => {
-      const element = document.getElementById(`accordion-${userId}-${taskId}`);
-      element.style.removeProperty('display');
-      element.classList.add('show');
+      this.$refs[`accordion-${userId}-${taskId}`][0].toggle();
       this.showTask(userId, taskId);
       }, 1000); 
+    },
+    closeUserAccordion(userId) {
+      this.$refs[`accordion-${userId}`][0].toggle();
+    },
+    closeTaskAccordion(userId, taskId) {
+      this.$refs[`accordion-${userId}-${taskId}`][0].toggle();
     }
   },
 });

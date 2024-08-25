@@ -58,6 +58,12 @@
             </b-collapse>
           </b-card>
         </div>
+        <div v-if="loading">
+          <span class="text-center"><font-awesome-icon icon="fa-solid fa-sync fa-72x" spin/></span>
+        </div>
+        <div v-else-if="users.length === 0">
+          <h3 class="text-center">No users</h3>
+        </div>
         <div class="d-flex justify-content-between" v-if="totalRecords >= 1">
           <div>
             <div class="p-2">
@@ -191,13 +197,10 @@
   </div>
 </template>
 
-<!--<script lang="ts">-->
 <script>
 import Vue from "vue";
 import axios from "axios";
 import Swal from 'sweetalert2';
-import { BModal } from 'bootstrap-vue'
-
 
 export default Vue.extend({
   name: "IndexPage",
@@ -216,7 +219,6 @@ export default Vue.extend({
       singleTask: {},
       newTask: {},
       validationErrors: [],
-      modalInstance: null,
       success: ''
     };
   },
@@ -236,9 +238,6 @@ export default Vue.extend({
     } else {
       this.getUsers(1);
     }
-  },
-  components: {
-    BModal
   },
   methods: {
     getUsers(page) {

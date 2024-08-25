@@ -8,10 +8,11 @@ use App\Http\Resources\TaskResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\SingleUserResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index() : JsonResponse
     {
         $perPage = 10;
         $users = User::paginate($perPage);
@@ -24,7 +25,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function show(User $user)
+    public function show(User $user) : JsonResponse
     {   
         $tasks = $user->tasks()->select('id')->get();
 
@@ -34,7 +35,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request) : JsonResponse
     {
         User::create($request->validated());
 
@@ -43,7 +44,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user) : JsonResponse
     {
         $user->update($request->validated());
 
@@ -53,7 +54,7 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function destroy(User $user)
+    public function destroy(User $user) : JsonResponse
     {
         $user->delete();
 

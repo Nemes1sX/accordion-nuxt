@@ -209,6 +209,7 @@ export default Vue.extend({
       singleUser: {},
       newUser: {},
       currentPage: 1,
+      pagesPerRecord: 10,
       totalPages: 0,
       totalRecords: 0,
       tasks: [],
@@ -220,11 +221,21 @@ export default Vue.extend({
     };
   },
   created() {
-    if (this.$route.query.user) {
+    if (this.$route.query.user && this.$route.query.task) { 
       let sharedUser = this.$route.query.user;
-      this.openSharedUser(sharedUser);
+      let sharedTask = this.$route.query.task;
+      const page = Math.ceil(sharedUser / this.pagesPerRecord);
+      this.getUsers(page);
+      this.openSharedTask(sharedUser, sharedTask);
     }
-    this.getUsers(1);
+    else if (this.$route.query.user) {
+      let sharedUser = this.$route.query.user;
+      const page = Math.ceil(sharedUser / this.pagesPerRecord);
+      this.getUsers(page);
+      this.openSharedUser(sharedUser);
+    } else {
+      this.getUsers(1);
+    }
   },
   components: {
     BModal
@@ -318,14 +329,17 @@ export default Vue.extend({
       const baseUrl  = process.env.baseUrl;
       var tempInput = document.createElement('input');
       document.body.append(tempInput);
-      tempInput.value = `${baseUrl}?user=${userId}`;
+      tempInput.value = `${baseUrl}/?user=${userId}`;
       tempInput.select();
       document.execCommand('copy');
     },
     openSharedUser(id) {
+      setTimeout(() => {
       const element = document.getElementById(`accordion-${id}`);
-      element.style.display = "";
+      element.style.removeProperty('display');
       element.classList.add('show');
+      }, 1000);
+      this.showUser(id);
     },
     createTask(id) {
       axios
@@ -400,9 +414,18 @@ export default Vue.extend({
       const baseUrl  = process.env.baseUrl;
       var tempInput = document.createElement('input');
       document.body.append(tempInput);
-      tempInput.value = `${baseUrl}?user=${userId}&task=${taskId}`;
+      tempInput.value = `${baseUrl}/?user=${userId}&task=${taskId}`;
       tempInput.select();
       document.execCommand('copy');
+    },
+    openSharedTask(userId, taskId) {
+     this.openSharedUser(userId);
+     setTimeout(() => {
+      const element = document.getElementById(`accordion-${userId}-${taskId}`);
+      element.style.removeProperty('display');
+      element.classList.add('show');
+      this.showTask(userId, taskId);
+      }, 1000); 
     }
   },
 });

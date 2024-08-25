@@ -4,7 +4,7 @@ export default {
   ssr: false,
   env: {
     apiUrl: "https://accordion.dev/api",
-    baseUrl: "https://localhost:3000"
+    baseUrl: "localhost:3000"
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {

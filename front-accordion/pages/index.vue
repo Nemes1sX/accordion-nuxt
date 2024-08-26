@@ -4,19 +4,20 @@
       <div class="container-fluid d-grid gap-3">
         <div class="d-grid gap-3">
           <h2 class="text-center p-2">Accordion app</h2>
-          <div class="alert alert-success" role="alert" v-if="success" >
-            {{ success}}
+          <div class="alert alert-success" role="alert" v-if="success">
+            {{ success }}
           </div>
           <b-button class="btn btn-success p-2" v-b-modal="'create-user'">Create user</b-button>
         </div>
-        <br/>
+        <br />
         <div v-if="users.length > 0" v-for="user in users" class="user-accordion" role="tablist">
           <b-card no-body class="mb-1">
             <b-card-header header-tag="header" class="p-1" role="tab">
               <b-button block aria-expanded="false" class="collapsed" v-b-toggle="'accordion-' + user.id" variant="info"
                 @click="showUser(user.id)">User {{ user.id }}</b-button>
             </b-card-header>
-            <b-collapse :id="'accordion-' + user.id" :ref="'accordion-' + user.id" false accordion="user-accordion" role="tabpanel">
+            <b-collapse :id="'accordion-' + user.id" :ref="'accordion-' + user.id" false accordion="user-accordion"
+              role="tabpanel">
               <b-card-body>
                 <b-card-text>
                   <ul class="list-group list-group-flush">
@@ -28,27 +29,33 @@
                 <div class="btn-group btn-group-flex" role="group" aria-label="Basic example">
                   <button type="button" class="btn btn-success mx-1 my-1" v-b-modal="'create-task'">Create task</button>
                   <button type="button" class="btn btn-primary mx-1 my-1" v-b-modal="'edit-user'">Edit user</button>
-                  <button type="button" class="btn btn-secondary mx-1 my-1" @click="shareUser(user.id)">Share user</button>
-                  <button type="button" class="btn btn-danger mx-1 my-1" @click="deleteUser(user.id)">Delete user</button>
+                  <button type="button" class="btn btn-secondary mx-1 my-1" @click="shareUser(user.id)">Share
+                    user</button>
+                  <button type="button" class="btn btn-danger mx-1 my-1" @click="deleteUser(user.id)">Delete
+                    user</button>
                 </div>
                 <div v-if="tasks.length > 0" v-for="task in tasks" class="task-accordion" role="tablist">
                   <b-card no-body class="mb-1">
                     <b-card-header header-tag="header" class="p-1" role="tab">
                       <b-button block aria-expanded="false" class="collapsed"
-                        v-b-toggle="'accordion-' + user.id + '-' + task.id" variant="info" @click="showTask(user.id, task.id)">
+                        v-b-toggle="'accordion-' + user.id + '-' + task.id" variant="info"
+                        @click="showTask(user.id, task.id)">
                         Task {{ task.id }}</b-button>
                     </b-card-header>
-                    <b-collapse :id="'accordion-' + user.id + '-' + task.id" :ref="'accordion-' + user.id + '-' + task.id" false accordion="task-accordion"
-                      role="tabpanel">
+                    <b-collapse :id="'accordion-' + user.id + '-' + task.id"
+                      :ref="'accordion-' + user.id + '-' + task.id" false accordion="task-accordion" role="tabpanel">
                       <b-card-body>
                         <ul class="list-group list-group-flush">
                           <li class="list-group-item">Task: {{ singleTask.name }}</li>
                           <li class="list-group-item">Description: {{ singleTask.description }}</li>
                         </ul>
                         <div class="btn-group d-flex" role="group" aria-label="Basic example">
-                          <button type="button" class="btn btn-primary mx-1 my-1" v-b-modal="'edit-task'">Edit task</button>
-                          <button type="button" class="btn btn-secondary mx-1 my-1" @click="shareTask(user.id, task.id)">Share task</button>
-                          <button type="button" class="btn btn-danger mx-1 my-1" @click="deleteTask(user.id, task.id)">Delete task</button>
+                          <button type="button" class="btn btn-primary mx-1 my-1" v-b-modal="'edit-task'">Edit
+                            task</button>
+                          <button type="button" class="btn btn-secondary mx-1 my-1"
+                            @click="shareTask(user.id, task.id)">Share task</button>
+                          <button type="button" class="btn btn-danger mx-1 my-1"
+                            @click="deleteTask(user.id, task.id)">Delete task</button>
                         </div>
                       </b-card-body>
                     </b-collapse>
@@ -59,9 +66,9 @@
           </b-card>
         </div>
         <div v-if="loading">
-          <span class="text-center"><font-awesome-icon icon="fa-solid fa-sync fa-10x" spin/></span>
+          <span class="text-center"><font-awesome-icon icon="fa-solid fa-sync fa-10x" spin /></span>
         </div>
-        <div v-else-if="users.length === 0">
+        <div v-else-if="users.length === 0 && loading">
           <h3 class="text-center">No users</h3>
         </div>
         <div class="d-flex justify-content-between" v-if="totalRecords >= 1">
@@ -86,12 +93,12 @@
                   <li class="page-item" v-if="currentPage - 2 > 1">
                     <a @click="paginate(currentPage - 2)" class="page-link">{{
                       currentPage - 2
-                      }}</a>
+                    }}</a>
                   </li>
                   <li class="page-item" v-if="currentPage - 1 > 1">
                     <a @click="paginate(currentPage - 1)" class="page-link">{{
                       currentPage - 1
-                      }}</a>
+                    }}</a>
                   </li>
                   <li class="page-item" v-if="currentPage !== 1" :class="{ active: currentPage }">
                     <a @click="paginate(currentPage)" class="page-link" :class="{ 'not-clickable': currentPage }">{{
@@ -100,12 +107,12 @@
                   <li class="page-item" v-if="currentPage + 1 <= totalPages">
                     <a @click="paginate(currentPage + 1)" class="page-link">{{
                       currentPage + 1
-                      }}</a>
+                    }}</a>
                   </li>
                   <li class="page-item" v-if="currentPage + 2 <= totalPages">
                     <a @click="paginate(currentPage + 2)" class="page-link">{{
                       currentPage + 2
-                      }}</a>
+                    }}</a>
                   </li>
                   <li class="page-item" v-if="currentPage + 2 < totalPages">
                     <a href="#" class="page-link">...</a>
@@ -132,20 +139,23 @@
           <label for="new-user-email" class="form-label">Email address</label>
           <input type="email" class="form-control" v-model="newUser.email" id="new-user-email"
             placeholder="name@example.com">
-            <p v-if="validationErrors" v-for="email in validationErrors.email" class="text-danger">{{ email}}</p>
+          <p v-if="validationErrors" v-for="email in validationErrors.email" class="text-danger">{{ email }}</p>
         </div>
         <div class="mb-3">
           <label for="new-user-name" class="form-label">Name</label>
           <input type="text" class="form-control" v-model="newUser.name" id="new-user-name" placeholder="name">
-          <p v-if="validationErrors" v-for="name in validationErrors.name" class="text-danger">{{ name}}</p>
+          <p v-if="validationErrors" v-for="name in validationErrors.name" class="text-danger">{{ name }}</p>
         </div>
         <div class="mb-3">
           <label for="new-user-password" class="form-label">Password</label>
           <input type="password" class="form-control" v-model="newUser.password" id="new-user-password">
-          <p v-if="validationErrors" v-for="password in validationErrors.password" class="text-danger">{{ password}}</p>
+          <p v-if="validationErrors" v-for="password in validationErrors.password" class="text-danger">{{ password }}</p>
         </div>
       </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="createUser()">Save user</b-button>
+      <b-button class="mt-3" variant="outline-danger" block @click="createUser()" :disabled="loadingForm">
+        <span v-if="!loadingForm">Save user</span>
+        <span v-else><font-awesome-icon icon="fa-solid fa-sync" spin /></span>
+      </b-button>
     </b-modal>
     <b-modal ref="edit-user" id="edit-user" hide-footer title="Edit user">
       <div class="d-block text-center">
@@ -153,46 +163,58 @@
           <label for="edit-user-email" class="form-label">Email address</label>
           <input type="email" class="form-control" v-model="singleUser.email" id="edit-user-email"
             placeholder="name@example.com">
-            <p v-if="validationErrors" v-for="email in validationErrors.email" class="text-danger">{{ email}}</p>
+          <p v-if="validationErrors" v-for="email in validationErrors.email" class="text-danger">{{ email }}</p>
         </div>
         <div class="mb-3">
           <label for="edit-user-name" class="form-label">Name</label>
           <input type="text" class="form-control" v-model="singleUser.name" id="edit-user-name" placeholder="name">
-          <p v-if="validationErrors" v-for="name in validationErrors.name" class="text-danger">{{ name}}</p>
+          <p v-if="validationErrors" v-for="name in validationErrors.name" class="text-danger">{{ name }}</p>
         </div>
       </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="editUser(singleUser.id)">Edit user</b-button>
+      <b-button class="mt-3" variant="outline-danger" block @click="editUser(singleUser.id)" :disabled="loadingForm">
+        <span v-if="!loadingForm">Edit user</span>
+        <span v-else><font-awesome-icon icon="fa-solid fa-sync" spin /></span>
+      </b-button>
     </b-modal>
     <b-modal ref="create-task" id="create-task" hide-footer title="Create task">
       <div class="d-block text-center">
         <div class="mb-3">
           <label for="new-user-email" class="form-label">Name</label>
           <input type="text" class="form-control" v-model="newTask.name" id="new-user-email" placeholder="name">
-          <p v-if="validationErrors" v-for="name in validationErrors.name" class="text-danger">{{ name}}</p>
+          <p v-if="validationErrors" v-for="name in validationErrors.name" class="text-danger">{{ name }}</p>
         </div>
         <div class="mb-3">
           <label for="new-user-name" class="form-label">Description</label>
           <input type="text" class="form-control" v-model="newTask.description" id="new-user-name" placeholder="Hello">
-          <p v-if="validationErrors" v-for="description in validationErrors.description" class="text-danger">{{ description}}</p>
+          <p v-if="validationErrors" v-for="description in validationErrors.description" class="text-danger">{{
+            description}}</p>
         </div>
       </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="createTask(singleUser.id)">Save task</b-button>
+      <b-button class="mt-3" variant="outline-danger" block @click="createTask(singleUser.id)" :disabled="loadingForm">
+        <span v-if="!loadingForm">Save task</span>
+        <span v-else><font-awesome-icon icon="fa-solid fa-sync" spin /></span>
+      </b-button>
     </b-modal>
     <b-modal ref="edit-task" id="edit-task" hide-footer title="Edit task">
       <div class="d-block text-center">
         <div class="mb-3">
           <label for="edit-task-name" class="form-label">Name</label>
           <input type="text" class="form-control" v-model="singleTask.name" id="edit-task-name" placeholder="name">
-          <p v-if="validationErrors" v-for="name in validationErrors.name" class="text-danger">{{ name}}</p>
+          <p v-if="validationErrors" v-for="name in validationErrors.name" class="text-danger">{{ name }}</p>
         </div>
         <div class="mb-3">
           <label for="edit-task-description" class="form-label">Description</label>
           <input type="text" class="form-control" v-model="singleTask.description" id="edit-task-description"
             placeholder="Hello">
-          <p v-if="validationErrors" v-for="description in validationErrors.description" class="text-danger">{{ description}}</p>
+          <p v-if="validationErrors" v-for="description in validationErrors.description" class="text-danger">{{
+            description}}</p>
         </div>
       </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="editTask(singleUser.id, singleTask.id)">Edit task</b-button>
+      <b-button class="mt-3" variant="outline-danger" block @click="editTask(singleUser.id, singleTask.id)"
+        :disabled="loadingForm">
+        <span v-if="!loadingForm">Edit task</span>
+        <span v-else><font-awesome-icon icon="fa-solid fa-sync" spin /></span>
+      </b-button>
     </b-modal>
   </div>
 </template>
@@ -208,6 +230,7 @@ export default Vue.extend({
     return {
       disableEditUser: false,
       loading: true,
+      loadingForm: false,
       users: [],
       singleUser: {},
       newUser: {},
@@ -223,7 +246,7 @@ export default Vue.extend({
     };
   },
   created() {
-    if (this.$route.query.user && this.$route.query.task) { 
+    if (this.$route.query.user && this.$route.query.task) {
       let sharedUser = this.$route.query.user;
       let sharedTask = this.$route.query.task;
       const page = Math.ceil(sharedUser / this.pagesPerRecord);
@@ -256,30 +279,34 @@ export default Vue.extend({
           this.loading = false;
           console.log(error);
         });
-    },  
+    },
     paginate(page) {
-      
       if (this.$route.query.task && this.$route.query.user) {
-        this.$refs[`accordion-${this.$route.query.user}-${this.$route.query.task}`][0].toggle();
+        this.closeTaskAccordion(this.$route.query.user, this.$route.query.task);
         this.closeUserAccordion(this.$route.query.user);
-        this.$router.replace({'query': null});
-      } else if (this.$route.query.user){        
+        this.$router.replace({ 'query': null });
+      } else if (this.$route.query.user) {
         this.closeUserAccordion(this.$route.query.user);
-        this.$router.replace({'query': null});
-      }     
-       this.currentPage = page;
+        this.$router.replace({ 'query': null });
+      }
+      this.currentPage = page;
       this.getUsers(this.currentPage);
     },
     createUser() {
+      this.loadingForm = true;
+      this.validationErrors = [];
       axios
         .post(`${process.env.apiUrl}/users`, this.newUser)
         .then((response) => {
           this.newUser = {};
           this.success = response.data.success;
           this.$refs['create-user'].hide();
+          this.loadingForm = false;
           setTimeout(() => this.success = '', 60000);
+          this.getUsers(this.currentPage);
         })
         .catch((error) => {
+          this.loadingForm = false;
           if (error.response.status === 422) {
             this.validationErrors = error.response.data.errors;
           }
@@ -293,21 +320,22 @@ export default Vue.extend({
           this.tasks = response.data.tasks;
         })
         .catch((error) => {
-          this.loading = false;
           console.log(error);
         });
     },
     editUser(id) {
+      this.loadingForm = true;
+      this.validationErrors = [];
       axios
         .put(`${process.env.apiUrl}/users/${id}`, this.singleUser)
         .then((response) => {
           this.success = response.data.success
           this.$refs['edit-user'].hide();
           setTimeout(() => this.success = '', 60000);
-          this.loading = false;
+          this.loadingForm = false;
         })
         .catch((error) => {
-          this.loading = false;
+          this.loadingForm = false;
           console.log(error);
         });
     },
@@ -321,22 +349,23 @@ export default Vue.extend({
         cancelButtonText: 'Cancel'
       });
       if (confirmed.isConfirmed) {
-      await axios
-        .delete(`${process.env.apiUrl}/users/${id}`)
-        .then((response) => {
-          this.success = response.data.success;
-          this.singleUser = {}
-          this.getUsers(1);
-          this.loading = false;
-        })
-        .catch((error) => {
-          this.loading = false;
-          console.log(error);
-        });
+        this.loadingForm = true;
+        await axios
+          .delete(`${process.env.apiUrl}/users/${id}`)
+          .then((response) => {
+            this.success = response.data.success;
+            this.getUsers(1);
+            this.loadingForm = false;
+            this.singleUser = {};
+          })
+          .catch((error) => {
+            this.loadingForm = false;
+            console.log(error);
+          });
       }
     },
     shareUser(userId) {
-      const baseUrl  = process.env.baseUrl;
+      const baseUrl = process.env.baseUrl;
       var tempInput = document.createElement('input');
       document.body.append(tempInput);
       tempInput.value = `${baseUrl}/?user=${userId}`;
@@ -345,11 +374,18 @@ export default Vue.extend({
     },
     openSharedUser(userId) {
       setTimeout(() => {
-        this.$refs[`accordion-${userId}`][0].toggle();
+        for (let i = 1; i < this.totalPages; i++) {
+          if (document.getElementById(`accordion-${userId}`)) {
+            this.$refs[`accordion-${userId}`][0].toggle();
+            break;
+          }
+        }
       }, 1000);
       this.showUser(userId);
     },
     createTask(id) {
+      this.loadingForm = true;
+      this.validationErrors = [];
       axios
         .post(`${process.env.apiUrl}/users/${id}/tasks`, this.newTask)
         .then((response) => {
@@ -357,44 +393,45 @@ export default Vue.extend({
           this.newTask = {};
           this.$refs['create-task'].hide();
           setTimeout(() => this.success = '', 60000);
+          this.loadingForm = false;
           this.showUser(id);
         })
         .catch((error) => {
+          this.loadingForm = false;
           if (error.response.status === 422) {
             this.validationErrors = error.response.data.errors;
           }
         })
     },
     showTask(userId, taskId) {
-      this.loading = true;
       axios
         .get(`https://accordion.dev/api/users/${userId}/tasks/${taskId}`)
         .then((response) => {
           this.singleTask = response.data.task;
-          this.loading = false;
         })
         .catch((error) => {
-          this.loading = false;
           console.log(error);
         });
     },
     editTask(userId, taskId) {
-      this.loading = true;
+      this.loadingForm = true;
+      this.validationErrors = [];
       axios
         .put(`${process.env.apiUrl}/users/${userId}/tasks/${taskId}`, this.singleTask)
         .then((response) => {
           this.success = response.data.success;
           this.$refs['edit-task'].hide();
+          this.loadingForm = false;
           setTimeout(() => this.success = '', 60000);
         })
         .catch((error) => {
+          this.loadingForm = false;
           if (error.response.status === 422) {
             this.validationErrors = error.response.data.errors;
           }
         })
     },
     async deleteTask(userId, taskId) {
-      this.loading = true;
       const confirmed = await Swal.fire({
         title: 'Confirmation',
         text: 'Are you sure you want to delete the task',
@@ -404,22 +441,23 @@ export default Vue.extend({
         cancelButtonText: 'Cancel'
       });
       if (confirmed.isConfirmed) {
-      await axios
-        .delete(`${process.env.apiUrl}/users/${userId}/tasks/${taskId}`)
-        .then((response) => {
-          this.success = response.data.success
-          this.singleTask = {};
-          this.showTask(userId);
-          this.loading = false;
-        })
-        .catch((error) => {
-          this.loading = false;
-          console.log(error);
-        });
+        this.loadingForm = true;
+        await axios
+          .delete(`${process.env.apiUrl}/users/${userId}/tasks/${taskId}`)
+          .then((response) => {
+            this.success = response.data.success
+            this.singleTask = {};
+            this.showUser(userId);
+            this.loadingForm = false;
+          })
+          .catch((error) => {
+            this.loadingForm = false;
+            console.log(error);
+          });
       }
     },
     shareTask(userId, taskId) {
-      const baseUrl  = process.env.baseUrl;
+      const baseUrl = process.env.baseUrl;
       var tempInput = document.createElement('input');
       document.body.append(tempInput);
       tempInput.value = `${baseUrl}/?user=${userId}&task=${taskId}`;
@@ -427,11 +465,11 @@ export default Vue.extend({
       document.execCommand('copy');
     },
     openSharedTask(userId, taskId) {
-     this.openSharedUser(userId);
-     setTimeout(() => {
-      this.$refs[`accordion-${userId}-${taskId}`][0].toggle();
-      this.showTask(userId, taskId);
-      }, 1000); 
+      this.openSharedUser(userId);
+      setTimeout(() => {
+        this.$refs[`accordion-${userId}-${taskId}`][0].toggle();
+        this.showTask(userId, taskId);
+      }, 1000);
     },
     closeUserAccordion(userId) {
       this.$refs[`accordion-${userId}`][0].toggle();

@@ -371,6 +371,7 @@ export default Vue.extend({
       tempInput.value = `${baseUrl}/?user=${userId}`;
       tempInput.select();
       document.execCommand('copy');
+      tempInput.remove();
     },
     openSharedUser(userId) {
       setTimeout(() => {
@@ -463,6 +464,7 @@ export default Vue.extend({
       tempInput.value = `${baseUrl}/?user=${userId}&task=${taskId}`;
       tempInput.select();
       document.execCommand('copy');
+      tempInput.remove();
     },
     openSharedTask(userId, taskId) {
       this.openSharedUser(userId);

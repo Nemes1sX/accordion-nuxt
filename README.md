@@ -14,6 +14,7 @@ Extra if you want to deploy for production use ```npm run build``` & ```npm run 
 3. Copy .env file from example ```cp .env.example .env```
 4. Insert your prefered DB credentials to .env file or use Sqlite default one
 5. Run ```php artisan key:generate```
-6. Laragon users: just launch Laragon (projects are started for you by default). Other localhost providers you must run ```php artisan serve``` command to launch the server
+6. Run ```php artisan migrate```. If you want test data run ```php artisan migrate --seed``` 
+7. Laragon users: just launch Laragon (projects are started for you by default). Other localhost providers you must run ```php artisan serve``` command to launch the server
 
  

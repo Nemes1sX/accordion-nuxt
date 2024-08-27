@@ -376,6 +376,7 @@ export default Vue.extend({
     openSharedUser(userId) {
       setTimeout(() => {
         for (let i = 1; i < this.totalPages; i++) {
+          this.getUsers(i);
           if (document.getElementById(`accordion-${userId}`)) {
             this.$refs[`accordion-${userId}`][0].toggle();
             break;
